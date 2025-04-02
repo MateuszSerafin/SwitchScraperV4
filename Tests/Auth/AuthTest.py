@@ -8,7 +8,7 @@ import time
 #10.21.37.205 -> SSHUserPassword
 #All switches have the same users and password (User, Password1)
 
-def testThisIpCisco(ip: str, expectedLastLine: str, user="User", password="Password1", key_path="C:/Users/Mateusz/Desktop/id_rsa") -> bool:
+def testThisIpCisco(ip: str, expectedLastLine: str, user="User", password="Password1", key_path="/home/mateusz/Downloads/id_rsa") -> bool:
     return expectedLastLine == Cisco_IOS(ip, user, password, key_path).conn.find_prompt()
 
 
