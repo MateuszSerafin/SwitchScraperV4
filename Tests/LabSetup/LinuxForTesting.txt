@@ -1,1 +1,0 @@
-This is just arch linux with ssh, python3 and dependencies for this project.

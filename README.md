@@ -1,20 +1,21 @@
 # SwitchScraperV4
 
-## Previous Shenanigans
-- V1, It was kinda working but it had issues with adding things to it because it was flex taped together.
-- V2, I tried to refactor whole V1 but i rewrote how i handle data, Including one SSH session to try all authentication attempts. It had weird issues when switch was thinking for too long. When it worked it was blazingly fast but was undebuggable.
-- V3, Was a rewrite to Java under this repo https://github.com/MateuszSerafin/JswitchLib, TLDR; Unnecessarily complicated. Wanted better support to handle concurrent connections, parsing was painful.
-- V4, I Discovered netmiko exists lol, additionally i didn't know that there is ntc_templates, and it parses for me pretty much everything
+## Tldr
+1. I needed to dump information from switches (Port Descriptions, Vlans, Status etc.)
+2. Previously I didn't know about netmiko and ntc-templates
+3. I don't need it at the moment
+4. Getting Virtual images to test this on GNS3 is real problem hence only Cisco implementation as of now
+5. Current code is good, adding support to other vendors should be really easy
 
-# Currently
-I will do some improvements to it but i wanted to write some base which i can build on top of later on if i need it. 
-
-- Basic API exist, should be easy to add other vendors
-- For cisco; vlans, descriptions etc works. 
-- Tests are added
-
-# TODO
-- Jump gateway (Might not be done)
-- Make LAG interfaces somehow integrate to my code because I forgot about it
-- Add aruba device as it works with GNS3
-- Make a csv export of multiple switches
+## Sample Usage
+```python
+from wrapper.Vendor.Cisco_IOS import Cisco_IOS
+switch = Cisco_IOS("10.21.37.201", "User", "Password1")
+interfaces = switch.getInterfaces()
+#['GigabitEthernet0/0', 'GigabitEthernet0/1', 'GigabitEthernet0/2', 'GigabitEthernet0/3', 'GigabitEthernet1/0', 'GigabitEthernet1/1', 'GigabitEthernet1/2', 'GigabitEthernet1/3', 'GigabitEthernet2/0', 'GigabitEthernet2/1', 'GigabitEthernet2/2', 'GigabitEthernet2/3', 'GigabitEthernet3/0', 'GigabitEthernet3/1', 'GigabitEthernet3/2', 'GigabitEthernet3/3', 'Vlan2137']
+print(interfaces)
+#1
+print(switch.getUntaggedOnPort(interfaces[1]))
+#{1: 'default', 2: 'iksde', 1002: 'fddi-default', 1003: 'token-ring-default', 1004: 'fddinet-default', 1005: 'trnet-default', 2137: 'VLAN2137'}
+print(switch.getVlansWithDescription())
+```

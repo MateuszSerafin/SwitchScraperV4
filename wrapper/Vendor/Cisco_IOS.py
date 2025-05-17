@@ -10,7 +10,6 @@ class Cisco_IOS(NKWrapper, CommonSwitch):
 
     def __init__(self, ip: str, username: str = None, password: str = None, ssh_key_path: path = None, ssh_disabled_algorithms=dict(pubkeys=["rsa-sha2-512", "rsa-sha2-256"])):
         super().__init__(ip, "cisco_ios", username, password, ssh_key_path, ssh_disabled_algorithms=ssh_disabled_algorithms)
-
         self.didRunShowTrunk = False
 
     def getInterfaces(self) -> list[str]:

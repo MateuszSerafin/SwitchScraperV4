@@ -1,9 +1,6 @@
 from wrapper.Vendor.Cisco_IOS import Cisco_IOS
 
-# TODO upon adding new vendor i need to decide how i properly test multiple vendors and what behaviour i should have
-
-if __name__ == "__main__":
-
+def ciscoTest():
     testThis = Cisco_IOS("10.21.37.201", "User", "Password1")
 
     validInterfaces = ['GigabitEthernet0/0', 'GigabitEthernet0/1', 'GigabitEthernet0/2', 'GigabitEthernet0/3', 'GigabitEthernet1/0', 'GigabitEthernet1/1', 'GigabitEthernet1/2', 'GigabitEthernet1/3', 'GigabitEthernet2/0', 'GigabitEthernet2/1', 'GigabitEthernet2/2', 'GigabitEthernet2/3', 'GigabitEthernet3/0', 'GigabitEthernet3/1', 'GigabitEthernet3/2', 'GigabitEthernet3/3', 'Vlan2137']
@@ -25,7 +22,6 @@ if __name__ == "__main__":
     if(descriptions != validDescriptions):
         raise Exception("Interface descriptions are incorrect")
 
-    # TODO define how "admin down" should be defined is it good enough that it says down and check for "down" and make bool from it?
     validStatus = {'GigabitEthernet0/0': 'up', 'GigabitEthernet0/1': 'down', 'GigabitEthernet0/2': 'down', 'GigabitEthernet0/3': 'down', 'GigabitEthernet1/0': 'down', 'GigabitEthernet1/1': 'down', 'GigabitEthernet1/2': 'down', 'GigabitEthernet1/3': 'down', 'GigabitEthernet2/0': 'down', 'GigabitEthernet2/1': 'down', 'GigabitEthernet2/2': 'down', 'GigabitEthernet2/3': 'down', 'GigabitEthernet3/0': 'down', 'GigabitEthernet3/1': 'down', 'GigabitEthernet3/2': 'down', 'GigabitEthernet3/3': 'down', 'Vlan2137': 'admin down'}
     if(validStatus != status):
         raise Exception("Status parsing is causing problem")
@@ -45,4 +41,6 @@ if __name__ == "__main__":
     if(validVlanDescriptions != testThis.vlansDescriptions):
         raise Exception("Problem with parsing vlan Descriptions")
 
-    print("Yay tests passed probably missed something")
+if __name__ == "__main__":
+    ciscoTest()
+    print("If you see this then tests passed")

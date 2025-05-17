@@ -1,8 +1,6 @@
-Building configuration...
-
-Current configuration : 3656 bytes
+Current configuration : 3533 bytes
 !
-! Last configuration change at 20:29:33 UTC Wed Apr 2 2025
+! Last configuration change at 19:12:44 UTC Wed Apr 2 2025
 !
 version 15.2
 service timestamps debug datetime msec
@@ -10,7 +8,7 @@ service timestamps log datetime msec
 no service password-encryption
 service compress-config
 !
-hostname TelnetNoPassword
+hostname CiscoSSHKey
 !
 boot-start-marker
 boot-end-marker
@@ -22,10 +20,11 @@ no aaa new-model
 !
 !
 !
-!         
 !
 !
 !
+!
+ip domain-name testdomain.local
 ip cef
 no ipv6 cef
 !
@@ -35,9 +34,6 @@ spanning-tree mode pvst
 spanning-tree extend system-id
 !
 !
-vlan 2137 
-!
-! 
 !
 !
 !
@@ -45,33 +41,27 @@ vlan 2137
 !
 !
 !
-!         
+!
+!
 !
 !
 !
 !
 interface GigabitEthernet0/0
  no switchport
- ip address 10.21.37.201 255.255.255.0
+ ip address 10.21.37.204 255.255.255.0
  negotiation auto
 !
 interface GigabitEthernet0/1
  negotiation auto
 !
 interface GigabitEthernet0/2
- description t e \n s t 
  negotiation auto
 !
 interface GigabitEthernet0/3
- switchport trunk encapsulation dot1q
- switchport mode trunk
  negotiation auto
 !
 interface GigabitEthernet1/0
- switchport access vlan 2137
- switchport trunk allowed vlan 3,6,9
- switchport trunk encapsulation dot1q
- switchport mode trunk
  negotiation auto
 !
 interface GigabitEthernet1/1
@@ -91,7 +81,7 @@ interface GigabitEthernet2/1
 !
 interface GigabitEthernet2/2
  negotiation auto
-!         
+!
 interface GigabitEthernet2/3
  negotiation auto
 !
@@ -107,16 +97,16 @@ interface GigabitEthernet3/2
 interface GigabitEthernet3/3
  negotiation auto
 !
-interface Vlan2137
- description this is a test vlan
- no ip address
- shutdown
-!
 ip forward-protocol nd
 !
 ip http server
 ip http secure-server
 !
+ip ssh pubkey-chain
+  username User
+   key-hash ssh-rsa 9DC318F7614A7B576A8591FE8A6D83D6
+  username root
+   key-hash ssh-rsa 9DC318F7614A7B576A8591FE8A6D83D6
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
@@ -134,7 +124,6 @@ Supplemental End User License Restrictions
 
 This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
 
-          
 By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
 ^C
 banner incoming ^C
@@ -150,7 +139,7 @@ banner login ^C
 IOSv - Cisco Systems Confidential -
 
 Supplemental End User License Restrictions
-          
+
 This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
 
 By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
@@ -159,11 +148,11 @@ By using the software, you agree to abide by the terms and conditions of the Cis
 line con 0
 line aux 0
 line vty 0 4
- no login
- transport input telnet
+ login local
+ transport input ssh
 line vty 5 15
- no login
- transport input telnet
+ login local
+ transport input ssh
 !
 !
 end
